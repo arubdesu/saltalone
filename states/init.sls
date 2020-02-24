@@ -1,0 +1,4 @@
+include:
+  - .defaults
+  - .dock
+  - .bins
