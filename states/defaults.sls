@@ -12,7 +12,7 @@ Show status bar (disk space reminder):
     - name: ShowStatusBar
     - domain: com.apple.finder
     - vtype: bool
-    - value: false
+    - value: true
     - user: {{ pillar['user'] }}
 
 Allow text selection in Quick Look:
@@ -20,7 +20,7 @@ Allow text selection in Quick Look:
     - name: QLEnableTextSelection
     - domain: com.apple.finder
     - vtype: bool
-    - value: false
+    - value: true
     - user: {{ pillar['user'] }}
 
 New window points to home:
@@ -87,6 +87,16 @@ Show all processes in Activity Monitor:
     - value: 100
     - user: {{ pillar['user'] }}
 
+{% for key in ('Default Window Settings', 'Startup Window Settings') %}
+Set Novel theme/profile in Terminal for {{ key }}:
+  macdefaults.write:
+    - name: {{ key }}
+    - domain: com.apple.Terminal
+    - vtype: string
+    - value: 'Novel'
+    - user: {{ pillar['user'] }}
+{% endfor %}
+
 Show Safari Statusbar:
   macdefaults.write:
     - name: ShowStatusBar
@@ -95,14 +105,13 @@ Show Safari Statusbar:
     - value: true
     - user: {{ pillar['user'] }}
 
-# Not sure I care, use ~IE~ Chrome too much
-# Show DevelopMenu Safari:
-#   macdefaults.write:
-#     - name: IncludeDevelopMenu
-#     - domain: com.apple.Safari
-#     - vtype: bool
-#     - value: true
-#     - user: {{ pillar['user'] }}
+Show DevelopMenu Safari:
+  macdefaults.write:
+    - name: IncludeDevelopMenu
+    - domain: com.apple.Safari
+    - vtype: bool
+    - value: true
+    - user: {{ pillar['user'] }}
 
 Don't Auto-Open Safari Downloads:
   macdefaults.write:

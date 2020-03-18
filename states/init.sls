@@ -1,4 +1,5 @@
 include:
+  # - .autopkg
+  - .bins
   - .defaults
   - .dock
-  - .bins
