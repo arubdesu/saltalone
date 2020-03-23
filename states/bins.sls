@@ -22,34 +22,31 @@ Setup munki scratch dir:
       - /Users/Shared/repo/icons
     - makedirs: True
 
-Setup bash_profile, including symlink to python2.7 tools installed by pip:
+{% if not salt['file.search']('/private/etc/pam.d/sudo', 'auth       sufficient     pam_tid.so') %}
+TouchID for sudo because the internet:
+  file.append:
+    - name: /private/etc/pam.d/sudo
+    - text:
+      - auth       sufficient     pam_tid.so
+{% endif %}
+
+{% if not salt['file.search'](pillar['home'] ~ '/.bash_profile', '/Library/Python/2.7/bin') %}
+Tooo many var expansions, sets up path in bash_profile:
   file.append:
     - name: {{ pillar['home'] }}/.bash_profile
     - text:
       - export PATH="$PATH:{{ pillar['home'] }}/Library/Python/2.7/bin:{{ pillar['home'] }}/bin"
-      - export LC_ALL='en_US.UTF-8'
-      - export LANG='en_US.UTF-8'
-      # ~borrowed~ wholesale copied from https://github.com/hjuutilainen/dotfiles/blob/master/.bash_profile
-      # Number of lines in the history file
-      - export HISTFILESIZE=1000000
-      # Number of entries in the history file
-      - export HISTSIZE=1000000
-      # History file location
-      - export HISTFILE=~/.bash_history
-      # Display timestamps as "yyyy-mm-dd HH:MM:SS"
-      - export HISTTIMEFORMAT="%F %T "
-      # Ignore duplicates
-      - export HISTCONTROL=ignoreboth:erasedups
-      # Ignore stuff that we'd definitely never up-arrow to
-      - export HISTIGNORE=$'history:ping:which:exit:[ \t]*'
-      # Attempt to save all lines of a multiple-line command in the same history entry
-      - shopt -s cmdhist
-      # Appended instead of overwriting the history file
-      - shopt -s histappend
-      # Case-insensitive filename expansion
-      - shopt -s nocaseglob
-      # Make sure every simultaneous session has the same history
-      - export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+{% endif %}
+
+{% for line in pillar['bashers'] %}
+{% if not salt['file.search'](pillar['home'] ~ '/.bash_profile', line) %}
+Customize bash_profile, add line - {{ line }}:
+  file.append:
+    - name: {{ pillar['home'] }}/.bash_profile
+    - text:
+      - {{ line }}
+{% endif %}
+{% endfor %}
 
 Case-insensitive tab completion!:
   file.managed:
@@ -59,12 +56,12 @@ Case-insensitive tab completion!:
       - set completion-ignore-case on
 
 # eventually https://cloud.google.com/sdk/docs/downloads-interactive#silent
-{%- if salt['file.file_exists' ]('/Applications/TextMate.app/Contents/Resources/mate') %}
-Move TextMate mate cli into path:
+{% if salt['file.file_exists' ]('/Applications/TextMate.app/Contents/Resources/mate') %}
+Symlink TextMate 'mate' cli tool into path:
   file.symlink:
     - name: {{ pillar['home'] }}/bin/mate
     - target: /Applications/TextMate.app/Contents/Resources/mate
-{%- endif %}
+{% endif %}
 
 # TODO:jsonschema install/symlink
 #      pylint "/"

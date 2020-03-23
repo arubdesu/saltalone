@@ -2,3 +2,4 @@ base:
   '*':
     - dock
     - autopkg
+    - bins
