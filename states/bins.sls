@@ -30,12 +30,14 @@ TouchID for sudo because the internet:
       - auth       sufficient     pam_tid.so
 {% endif %}
 
+{% if salt['file.file_exists'](pillar['home'] ~ '/.bash_profile') %}
 {% if not salt['file.search'](pillar['home'] ~ '/.bash_profile', '/Library/Python/2.7/bin') %}
 Tooo many var expansions, sets up path in bash_profile:
   file.append:
     - name: {{ pillar['home'] }}/.bash_profile
     - text:
       - export PATH="$PATH:{{ pillar['home'] }}/Library/Python/2.7/bin:{{ pillar['home'] }}/bin"
+{% endif %}
 {% endif %}
 
 {% for line in pillar['bashers'] %}
