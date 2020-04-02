@@ -24,10 +24,11 @@ Setup munki scratch dir:
 
 {% if not salt['file.search']('/private/etc/pam.d/sudo', 'auth       sufficient     pam_tid.so') %}
 TouchID for sudo because the internet:
-  file.append:
+  file.line:
     - name: /private/etc/pam.d/sudo
-    - text:
-      - auth       sufficient     pam_tid.so
+    - mode: insert
+    - location: start
+    - content: auth       sufficient     pam_tid.so
 {% endif %}
 
 {% if salt['file.file_exists'](pillar['home'] ~ '/.bash_profile') %}
@@ -38,8 +39,6 @@ Tooo many var expansions, sets up path in bash_profile:
     - text:
       - export PATH="$PATH:{{ pillar['home'] }}/Library/Python/2.7/bin:{{ pillar['home'] }}/bin"
 {% endif %}
-{% endif %}
-
 {% for line in pillar['bashers'] %}
 {% if not salt['file.search'](pillar['home'] ~ '/.bash_profile', line) %}
 Customize bash_profile, add line - {{ line }}:
@@ -49,6 +48,7 @@ Customize bash_profile, add line - {{ line }}:
       - {{ line }}
 {% endif %}
 {% endfor %}
+{% endif %}
 
 Case-insensitive tab completion!:
   file.managed:
