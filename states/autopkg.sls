@@ -77,6 +77,12 @@ Install shellcheck with autopkg:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install Shellcheck
 {% endif %}
+# {% if not salt['file.directory_exists']('/Applications/Sonos.app') %}
+# Install SuspiciousPackageApp with autopkg:
+#   cmd.run:
+#     - runas: {{ pillar['user'] }}
+#     - name: /usr/local/bin/autopkg run 'Sonos S2.install'
+# {% endif %}
 {% if not salt['file.directory_exists']('/Applications/Suspicious Package.app') %}
 Install SuspiciousPackageApp with autopkg:
   cmd.run:
