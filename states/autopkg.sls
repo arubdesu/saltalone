@@ -47,7 +47,6 @@ Install 1Password with autopkg:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install 1Password
 {% endif %}
-  - Aerial
 {% if not salt['file.directory_exists']('/Library/Screen Savers/Aerial.saver') %}
 Install Aerial screen saver with autopkg:
   cmd.run:
