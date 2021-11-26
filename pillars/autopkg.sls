@@ -1,7 +1,7 @@
 repos:
   - recipes
   - andrewvalentine-recipes
-  - dataJAR-recipes
+  - arubdesu-recipes
   - eholtam-recipes
   - grahamgilbert-recipes
   - hjuutilainen-recipes
@@ -15,6 +15,7 @@ repos:
 installs:
   - Clipy
   - MunkiAdmin
+  - Sonos
   - ViDL
 
 # others/notes:
