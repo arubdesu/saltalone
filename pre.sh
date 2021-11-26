@@ -6,3 +6,4 @@ sudo installer -pkg /tmp/apkg.pkg -target /
 autopkg repo-add mosen-recipes && autopkg run -vvv --key PYVERSION=3 salt.install
 sudo echo "master_type: disable" >> /etc/salt/minion
 sudo echo "log_level: debug" >> /etc/salt/minion
+sudo echo "enable_fqdns_grains: False" >> /etc/salt/minion

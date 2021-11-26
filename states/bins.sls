@@ -15,11 +15,11 @@ Setup munki scratch dir:
   file.directory:
     - user: {{ pillar['user'] }}
     - names:
-      - /Users/Shared/repo/catalogs
-      - /Users/Shared/repo/icons
-      - /Users/Shared/repo/pkgs
-      - /Users/Shared/repo/pkgsinfo
-      - /Users/Shared/repo/icons
+      - /Users/Shared/munki_repo/catalogs
+      - /Users/Shared/munki_repo/icons
+      - /Users/Shared/munki_repo/pkgs
+      - /Users/Shared/munki_repo/pkgsinfo
+      - /Users/Shared/munki_repo/icons
     - makedirs: True
 
 {% if not salt['file.search']('/private/etc/pam.d/sudo', 'auth       sufficient     pam_tid.so') %}
@@ -31,33 +31,15 @@ TouchID for sudo because the internet:
     - content: auth       sufficient     pam_tid.so
 {% endif %}
 
-{% if salt['file.file_exists'](pillar['home'] ~ '/.bash_profile') %}
-{% if not salt['file.search'](pillar['home'] ~ '/.bash_profile', '/Library/Python/2.7/bin') %}
-Tooo many var expansions, sets up path in bash_profile:
-  file.append:
-    - name: {{ pillar['home'] }}/.bash_profile
-    - text:
-      - export PATH="$PATH:{{ pillar['home'] }}/Library/Python/2.7/bin:{{ pillar['home'] }}/bin"
-{% endif %}
-{% for line in pillar['bashers'] %}
-{% if not salt['file.search'](pillar['home'] ~ '/.bash_profile', line) %}
-Customize bash_profile, add line - {{ line }}:
-  file.append:
-    - name: {{ pillar['home'] }}/.bash_profile
-    - text:
-      - {{ line }}
-{% endif %}
-{% endfor %}
+{% if not salt['file.file_exists']('{{ pillar['home'] }}/.zshrc') %}
+Stop apple screwy zsh WORDCHARS not splitting on forwardslash:
+  file.line:
+    - name: {{ pillar['home'] }}/.zshrc
+    - mode: insert
+    - location: start
+    - content: WORDCHARS=''
 {% endif %}
 
-Case-insensitive tab completion!:
-  file.managed:
-    - name: /etc/inputrc
-    - contents:
-      - #tells readline to complete filenames regardless of case https://superuser.com/a/90202
-      - set completion-ignore-case on
-
-# eventually https://cloud.google.com/sdk/docs/downloads-interactive#silent
 {% if salt['file.file_exists' ]('/Applications/TextMate.app/Contents/Resources/mate') %}
 Symlink TextMate 'mate' cli tool into path:
   file.symlink:
@@ -65,6 +47,6 @@ Symlink TextMate 'mate' cli tool into path:
     - target: /Applications/TextMate.app/Contents/Resources/mate
 {% endif %}
 
-# TODO:jsonschema install/symlink
+# TODO:pre-commit,jsonschema install/symlink
 #      pylint "/"
 #      youtube-dl "/"

@@ -7,25 +7,27 @@ repos:
   - hjuutilainen-recipes
   - homebysix-recipes
   - jaharmi-recipes
+  - jleggat-recipes
   - MichalMMac-recipes
   - rustymyers-recipes
   - wardsparadox-recipes
 
 installs:
-  - 1Password
+  - Aerial
   - Clipy
   - GitHub Desktop
-  - Hancock
-  - HexFiend
-  - Mactracker
-  - OmniDiskSweeper
-  - Packages
-  - Paw
-  - Recipe Robot
-  - Sonos
-  - TextMate
   - TextExpander
   - MunkiAdmin
+  - ViDL
 
-# downloads:
-#   - StuffThatDoesn'tHaveInstallRecipesYet
+# others/notes:
+#   - TODO: StuffThatDoesn'tHaveUpdated/non-conflictingInstallRecipesYet
+  # - Sonos
+  # - TextMate2
+# get from MAS instead because why not
+  # - Mactracker, Line, 
+# get if I really think I need it when the time comes
+  # - Hancock
+  # - Packages
+  # - Paw
+  # - Recipe Robot

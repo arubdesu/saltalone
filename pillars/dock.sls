@@ -1,26 +1,26 @@
 dock_removals:
-  - Launchpad
   - Mail
-  - Contacts
-  - Calendar
-  - Notes
-  - Reminders
   - Maps
   - Photos
-  - Messages
   - FaceTime
-  # May not be present unless straight-from-box
+  - Calendar
+  - Contacts
+  - Reminders
+  - Notes
+  - TV
+  - Music
+  - Podcasts
   - Pages
-  - Keynote
-  - iTunes
   - App Store
-  # # Shouldn't actually be present anymore?
+  # # Shouldn't actually be present anymore
   # - Siri
+  # - Keynote
+  # - iTunes
   # - iBooks
 
 dockapp_additions:
   - Google Chrome
-  - Numbers
+  - Archive Utility
   - System Preferences
   - TextMate
 
@@ -28,3 +28,12 @@ dockother_additions:
   - Desktop
   - Downloads
 
+# desired:
+  # - Launchpad
+  # - Messages
+  # - Safari
+  # - Google Chrome
+  # - Numbers
+  # - System Preferences
+  # - TextMate
+  
