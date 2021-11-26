@@ -14,7 +14,6 @@ repos:
 
 installs:
   - Clipy
-  - TextExpander
   - MunkiAdmin
   - ViDL
 

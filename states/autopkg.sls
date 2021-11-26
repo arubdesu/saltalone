@@ -65,10 +65,28 @@ Install Hex Fiend with autopkg:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install HexFiend
 {% endif %}
+{% if not salt['file.file_exists']('/usr/local/bin/rg') %}
+Install ripgrep with autopkg:
+  cmd.run:
+    - runas: {{ pillar['user'] }}
+    - name: /usr/local/bin/autopkg install ripgrep
+{% endif %}
+{% if not salt['file.file_exists']('/usr/local/bin/shellcheck') %}
+Install shellcheck with autopkg:
+  cmd.run:
+    - runas: {{ pillar['user'] }}
+    - name: /usr/local/bin/autopkg install Shellcheck
+{% endif %}
 {% if not salt['file.directory_exists']('/Applications/Suspicious Package.app') %}
 Install SuspiciousPackageApp with autopkg:
   cmd.run:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install SuspiciousPackageApp
+{% endif %}
+{% if not salt['file.directory_exists']('/Applications/TextExpander.app') %}
+Install TextExpander with autopkg:
+  cmd.run:
+    - runas: {{ pillar['user'] }}
+    - name: /usr/local/bin/autopkg install TextExpander6
 {% endif %}
 {% endif %}
