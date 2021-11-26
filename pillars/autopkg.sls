@@ -15,7 +15,6 @@ repos:
 installs:
   - Aerial
   - Clipy
-  - GitHub Desktop
   - TextExpander
   - MunkiAdmin
   - ViDL

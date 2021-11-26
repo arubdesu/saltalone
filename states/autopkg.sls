@@ -48,8 +48,14 @@ Install 1Password with autopkg:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install 1Password
 {% endif %}
+{% if not salt['file.directory_exists']('/Applications/GitHub Desktop.app') %}
+Install GitHub Desktop with autopkg:
+  cmd.run:
+    - runas: {{ pillar['user'] }}
+    - name: /usr/local/bin/autopkg install GitHubDesktop
+{% endif %}
 {% if not salt['file.directory_exists']('/Applications/Hex Fiend.app') %}
-Install 1Password with autopkg:
+Install Hex Fiend with autopkg:
   cmd.run:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install HexFiend
