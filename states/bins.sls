@@ -31,13 +31,12 @@ TouchID for sudo because the internet:
     - content: auth       sufficient     pam_tid.so
 {% endif %}
 
-{% if not salt['file.file_exists']('{{ pillar['home'] }}/.zshrc') %}
+{% if not salt['file.file_exists']("pillar['home']/.zshrc") %}
 Stop apple screwy zsh WORDCHARS not splitting on forwardslash:
-  file.line:
+  file.managed:
     - name: {{ pillar['home'] }}/.zshrc
-    - mode: insert
-    - location: start
-    - content: WORDCHARS=''
+    - contents:
+      - WORDCHARS=''
 {% endif %}
 
 {% if salt['file.file_exists' ]('/Applications/TextMate.app/Contents/Resources/mate') %}
