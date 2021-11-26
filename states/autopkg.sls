@@ -47,12 +47,12 @@ Install 1Password with autopkg:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install 1Password
 {% endif %}
-{% if not salt['file.directory_exists']('/Library/Screen Savers/Aerial.saver') %}
 Install Aerial screen saver with autopkg:
   cmd.run:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install Aerial
-{% endif %}
+    - unless:
+      - /bin/test -d /Library/Screen\ Savers/Aerial.saver
 {% if not salt['file.directory_exists']('/Applications/GitHub Desktop.app') %}
 Install GitHub Desktop with autopkg:
   cmd.run:
