@@ -13,7 +13,6 @@ repos:
   - wardsparadox-recipes
 
 installs:
-  - Aerial
   - Clipy
   - TextExpander
   - MunkiAdmin
