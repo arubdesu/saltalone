@@ -32,7 +32,6 @@ Checkout repos of autopkg recipes once - {{ repo }}:
     - unless:
       - /bin/test -d {{ pillar['home'] }}/Library/AutoPkg/RecipeRepos/com.github.autopkg.'{{ repo }}'
 {% endfor %}
-# since cmd.run keeps swallowing the glob'd app name e.g. in 1Password space 7 etc.
 {% for app in pillar['installs'] %}
 Install with autopkg - {{ app }}:
   cmd.run:
@@ -41,12 +40,19 @@ Install with autopkg - {{ app }}:
     - unless:
       - /bin/test -d /Applications/'{{ app }}.app'
 {% endfor %}
-# names don't match recipe exact, so pulling out of pillar
+# since name discrepancies, cmd.run kept swallowing glob'd app names e.g. in 1Password space 7, etc.
 {% if not salt['file.directory_exists']('/Applications/1Password 7.app') %}
 Install 1Password with autopkg:
   cmd.run:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install 1Password
+{% endif %}
+  - Aerial
+{% if not salt['file.directory_exists']('/Library/Screen Savers/Aerial.saver') %}
+Install Aerial screen saver with autopkg:
+  cmd.run:
+    - runas: {{ pillar['user'] }}
+    - name: /usr/local/bin/autopkg install Aerial
 {% endif %}
 {% if not salt['file.directory_exists']('/Applications/GitHub Desktop.app') %}
 Install GitHub Desktop with autopkg:
@@ -60,7 +66,6 @@ Install Hex Fiend with autopkg:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install HexFiend
 {% endif %}
-# inconsistently named and we hatesssss spacesssss 
 {% if not salt['file.directory_exists']('/Applications/Suspicious Package.app') %}
 Install SuspiciousPackageApp with autopkg:
   cmd.run:
