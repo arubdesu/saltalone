@@ -50,6 +50,12 @@ Install GitHub Desktop with autopkg:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install GitHubDesktop
 {% endif %}
+{% if not salt['file.file_exists']('/usr/local/bin/git-lfs') %}
+Install git-lfs with autopkg:
+  cmd.run:
+    - runas: {{ pillar['user'] }}
+    - name: /usr/local/bin/autopkg install git-lfs
+{% endif %}
 {% if not salt['file.directory_exists']('/Applications/Hex Fiend.app') %}
 Install Hex Fiend with autopkg:
   cmd.run:

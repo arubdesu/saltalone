@@ -1,6 +1,6 @@
 repos:
-  - recipes
   - andrewvalentine-recipes
+  - apettinen-recipes
   - arubdesu-recipes
   - eholtam-recipes
   - grahamgilbert-recipes
@@ -9,6 +9,7 @@ repos:
   - jaharmi-recipes
   - jleggat-recipes
   - MichalMMac-recipes
+  - recipes
   - scriptingosx-recipes
   - wardsparadox-recipes
 
@@ -21,6 +22,7 @@ installs:
 # others/notes:
 #   - TODO: StuffThatDoesn'tHaveUpdated/non-conflictingInstallRecipesYet
   # - TextMate2
+  # - TextExpander might be pillar-able, but currently broken, discussing in hjuutilainen-recipes/pull/208
 # get from MAS instead because why not
   # - Mactracker, Line, Tsurukame
 # get if I really think I need it when the time comes
