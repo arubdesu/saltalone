@@ -31,4 +31,3 @@ installs:
   # - Hancock
   # - Packages
   # - Paw
-  # - Recipe Robot

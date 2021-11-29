@@ -68,6 +68,12 @@ Install ripgrep with autopkg:
     - runas: {{ pillar['user'] }}
     - name: /usr/local/bin/autopkg install ripgrep
 {% endif %}
+{% if not salt['file.directory_exists']('/Applications/Recipe Robot.app') %}
+Install SuspiciousPackageApp with autopkg:
+  cmd.run:
+    - runas: {{ pillar['user'] }}
+    - name: /usr/local/bin/autopkg install 'Recipe Robot'
+{% endif %}
 {% if not salt['file.file_exists']('/usr/local/bin/shellcheck') %}
 Install shellcheck with autopkg:
   cmd.run:
