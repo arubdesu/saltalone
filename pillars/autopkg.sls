@@ -14,12 +14,15 @@ repos:
   - scriptingosx-recipes
   - wardsparadox-recipes
 
-installs:
+plain_apps:
   - Apparency
   - Clipy
   - MunkiAdmin
   - Sonos
   - ViDL
+
+# bins:
+#   rg: ripgrep
 
 # others/notes:
 #   - TODO: StuffThatDoesn'tHaveUpdated/non-conflictingInstallRecipesYet

@@ -23,7 +23,7 @@ Checkout repos of autopkg recipes once - {{ repo }}:
     - unless:
       - /bin/test -d {{ pillar['home'] }}/Library/AutoPkg/RecipeRepos/com.github.autopkg.'{{ repo }}'
 {% endfor %}
-{% for app in pillar['installs'] %}
+{% for app in pillar['plain_apps'] %}
 Install with autopkg - {{ app }}:
   cmd.run:
     - runas: {{ pillar['user'] }}

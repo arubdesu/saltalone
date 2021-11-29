@@ -22,6 +22,16 @@ Setup munki scratch dir:
       - /Users/Shared/munki_repo/icons
     - makedirs: True
 
+{% if not salt['file.file_exists']("pillar['home']/.zshrc") %}
+Stop apple screwy zsh WORDCHARS not splitting on forwardslash:
+  file.managed:
+    - name: {{ pillar['home'] }}/.zshrc
+    - contents:
+      - WORDCHARS=''
+      - export PATH=$PATH:{{ pillar['home'] }}/bin
+      - export GIT_LFS_SKIP_SMUDGE=1
+{% endif %}
+
 {% if not salt['file.search']('/private/etc/pam.d/sudo', 'auth       sufficient     pam_tid.so') %}
 TouchID for sudo because the internet:
   file.line:
@@ -31,21 +41,21 @@ TouchID for sudo because the internet:
     - content: auth       sufficient     pam_tid.so
 {% endif %}
 
-{% if not salt['file.file_exists']("pillar['home']/.zshrc") %}
-Stop apple screwy zsh WORDCHARS not splitting on forwardslash:
-  file.managed:
-    - name: {{ pillar['home'] }}/.zshrc
-    - contents:
-      - WORDCHARS=''
-{% endif %}
-
-{% if salt['file.file_exists' ]('/Applications/TextMate.app/Contents/Resources/mate') %}
+{% if salt['file.file_exists' ]('/Applications/TextMate.app/Contents/MacOS/mate') %}
 Symlink TextMate 'mate' cli tool into path:
   file.symlink:
     - name: {{ pillar['home'] }}/bin/mate
-    - target: /Applications/TextMate.app/Contents/Resources/mate
+    - user: {{ pillar['user'] }}
+    - target: /Applications/TextMate.app/Contents/MacOS/mate
 {% endif %}
 
-# TODO:pre-commit,jsonschema install/symlink
+{% if salt['file.file_exists' ]('/Applications/ViDL.app/Contents/Resources/youtube-dl') %}
+Symlink TextMate 'mate' cli tool into path:
+  file.symlink:
+    - name: {{ pillar['home'] }}/bin/youtube-dl
+    - user: {{ pillar['user'] }}
+    - target: /Applications/ViDL.app/Contents/Resources/youtube-dl
+{% endif %}
+
+# TODO:pre-commit, black,jsonschema install/symlink
 #      pylint "/"
-#      youtube-dl "/"
