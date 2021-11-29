@@ -8,12 +8,14 @@ repos:
   - homebysix-recipes
   - jaharmi-recipes
   - jleggat-recipes
+  - kevinmcox-recipes
   - MichalMMac-recipes
   - recipes
   - scriptingosx-recipes
   - wardsparadox-recipes
 
 installs:
+  - Apparency
   - Clipy
   - MunkiAdmin
   - Sonos
