@@ -51,6 +51,10 @@ Symlink pip cli tool black into path:
     - target: '{{ pillar['home'] }}/Library/Python/3.8/bin/black'
     - require:
       - pip: Setup pip installs - black
+# Debug stuffs:
+#   cmd.run:
+#     - runas: {{ pillar['user'] }}
+#     - name: echo env
 
 {% if not salt['file.file_exists']("pillar['home']/.zshrc") %}
 Stop apple screwy zsh WORDCHARS not splitting on forwardslash:

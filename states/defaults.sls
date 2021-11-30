@@ -120,3 +120,12 @@ Don't Auto-Open Safari Downloads:
     - vtype: bool
     - value: false
     - user: {{ pillar['user'] }}
+
+# Autopkg
+Point autopkg at local munki repo:
+  macdefaults.write:
+    - name: MUNKI_REPO
+    - domain: com.github.autopkg
+    - vtype: string
+    - value: '/Users/Shared/munki_repo'
+    - user: {{ pillar['user'] }}
