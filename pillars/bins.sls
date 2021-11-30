@@ -1,0 +1,3 @@
+pips:
+  - pre-commit
+  - pylint

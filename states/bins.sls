@@ -22,6 +22,36 @@ Setup munki scratch dir:
       - /Users/Shared/munki_repo/icons
     - makedirs: True
 
+{% for each in pillar['pips'] %}
+Setup pip installs - {{ each }}:
+  pip.installed:
+    - bin_env: '/usr/local/munki/Python.framework/Versions/3.9/bin/pip'
+    - pkgs:
+      - {{ each }}
+    - user: {{ pillar['user'] }}
+Symlink pip cli tool {{ each }} into path:
+  file.symlink:
+    - name: {{ pillar['home'] }}/bin/{{ each }}
+    - user: {{ pillar['user'] }}
+    - target: '{{ pillar['home'] }}/Library/Python/3.9/bin/{{ each }}'
+    - require:
+      - pip: Setup pip installs - {{ each }}
+{% endfor %}
+# special handling due to regex .so and arm64(e) issue w/ salt wrapping munki-python's pip
+Setup pip installs - black:
+  pip.installed:
+    - bin_env: '/usr/bin/pip3'
+    - pkgs:
+      - black
+    - user: {{ pillar['user'] }}
+Symlink pip cli tool black into path:
+  file.symlink:
+    - name: {{ pillar['home'] }}/bin/black
+    - user: {{ pillar['user'] }}
+    - target: '{{ pillar['home'] }}/Library/Python/3.8/bin/black'
+    - require:
+      - pip: Setup pip installs - black
+
 {% if not salt['file.file_exists']("pillar['home']/.zshrc") %}
 Stop apple screwy zsh WORDCHARS not splitting on forwardslash:
   file.managed:
@@ -50,12 +80,9 @@ Symlink TextMate 'mate' cli tool into path:
 {% endif %}
 
 {% if salt['file.file_exists' ]('/Applications/ViDL.app/Contents/Resources/youtube-dl') %}
-Symlink TextMate 'mate' cli tool into path:
+Symlink youtube-dl into path:
   file.symlink:
     - name: {{ pillar['home'] }}/bin/youtube-dl
     - user: {{ pillar['user'] }}
     - target: /Applications/ViDL.app/Contents/Resources/youtube-dl
 {% endif %}
-
-# TODO:pre-commit, black,jsonschema install/symlink
-#      pylint "/"
