@@ -21,15 +21,12 @@ plain_apps:
   - Sonos
   - ViDL
 
-# bins:
-#   rg: ripgrep
-
 # others/notes:
 #   - TODO: StuffThatDoesn'tHaveUpdated/non-conflictingInstallRecipesYet
   # - TextMate2
   # - TextExpander might be pillar-able, but currently broken, discussing in hjuutilainen-recipes/pull/208
-# get from MAS instead because why not
-  # - Mactracker, Line, Tsurukame
+# get/activate from MAS instead because why not
+  # - Mactracker, Line, Tsurukame, Numbers, Pages, Trello, Kaleidoscope
 # get if I really think I need it when the time comes
   # - Hancock
   # - Packages
