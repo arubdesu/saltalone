@@ -25,7 +25,7 @@ Setup munki scratch dir:
 {% for each in pillar['pips'] %}
 Setup pip installs - {{ each }}:
   pip.installed:
-    - bin_env: '/usr/local/munki/Python.framework/Versions/3.9/bin/pip'
+    - bin_env: '/usr/local/munki/Python.framework/Versions/Current/bin/pip'
     - pkgs:
       - {{ each }}
     - user: {{ pillar['user'] }}
@@ -33,7 +33,7 @@ Symlink pip cli tool {{ each }} into path:
   file.symlink:
     - name: {{ pillar['home'] }}/bin/{{ each }}
     - user: {{ pillar['user'] }}
-    - target: '{{ pillar['home'] }}/Library/Python/3.9/bin/{{ each }}'
+    - target: '{{ pillar['home'] }}/Library/Python/3.10/bin/{{ each }}'
     - require:
       - pip: Setup pip installs - {{ each }}
 {% endfor %}
@@ -60,10 +60,14 @@ Symlink pip cli tool black into path:
 Stop apple screwy zsh WORDCHARS not splitting on forwardslash:
   file.managed:
     - name: {{ pillar['home'] }}/.zshrc
+    - user: {{ pillar['user'] }}
     - contents:
       - WORDCHARS=''
       - export PATH=$PATH:{{ pillar['home'] }}/bin
       - export GIT_LFS_SKIP_SMUDGE=1
+      - setopt HIST_IGNORE_SPACE
+      - autoload -U +X bashcompinit && bashcompinit
+      - complete -o nospace -C /Users/allister/.tfenv/versions/1.0.6/terraform terraform
 {% endif %}
 
 {% if not salt['file.search']('/private/etc/pam.d/sudo', 'auth       sufficient     pam_tid.so') %}

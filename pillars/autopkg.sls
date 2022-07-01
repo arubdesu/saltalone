@@ -17,6 +17,7 @@ repos:
 plain_apps:
   - Apparency
   - Clipy
+  - Fake
   - MunkiAdmin
   - Sonos
   - ViDL
