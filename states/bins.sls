@@ -66,8 +66,6 @@ Stop apple screwy zsh WORDCHARS not splitting on forwardslash:
       - export PATH=$PATH:{{ pillar['home'] }}/bin
       - export GIT_LFS_SKIP_SMUDGE=1
       - setopt HIST_IGNORE_SPACE
-      - autoload -U +X bashcompinit && bashcompinit
-      - complete -o nospace -C /Users/allister/.tfenv/versions/1.0.6/terraform terraform
 {% endif %}
 
 {% if not salt['file.search']('/private/etc/pam.d/sudo', 'auth       sufficient     pam_tid.so') %}

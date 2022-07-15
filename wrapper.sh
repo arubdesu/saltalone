@@ -21,5 +21,4 @@ sudo -k /opt/salt/bin/salt-call \
             --module-dirs=${PWD}/_modules\
               --states-dir=${PWD}/_states\
                 state.highstate\
-                   pillar="{'home': '$HOME', 'user': '$USER'}"\
-                     test=True
+                   pillar="{'home': '$HOME', 'user': '$USER'}"
