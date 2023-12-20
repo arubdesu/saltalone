@@ -55,29 +55,6 @@ Disable crazynessmaking demonquotes:
     - value: false
     - user: {{ pillar['user'] }}
 
-#menubar-y
-Add VPN to menubar: #TODO - less whackadoodle https://superuser.com/q/398071
-  cmd.run:
-    - name: /usr/bin/open /System/Library/CoreServices/Menu\ Extras/VPN.menu
-    - unless:
-      - /usr/bin/grep VPN {{ pillar['home'] }}/Library/Preferences/com.apple.systemuiserver.plist
-    - runas: {{ pillar['user'] }}
-
-Show percentage by battery:
-  macdefaults.write:
-    - name: ShowPercent
-    - domain: com.apple.menuextra.battery
-    - vtype: string
-    - value: 'True'
-    - user: {{ pillar['user'] }}
-
-Restart menubar:
-  cmd.run:
-    - name: /usr/bin/killall SystemUIServer
-    - runas: {{ pillar['user'] }}
-    - onchanges:
-      - macdefaults: Show percentage by battery
-
 # AppleApps
 Show all processes in Activity Monitor:
   macdefaults.write:
