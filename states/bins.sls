@@ -68,27 +68,28 @@ Stop apple screwy zsh WORDCHARS not splitting on forwardslash:
       - setopt HIST_IGNORE_SPACE
 {% endif %}
 
-{% if not salt['file.search']('/private/etc/pam.d/sudo', 'auth       sufficient     pam_tid.so') %}
+{% if not salt['file.file_exists']('/private/etc/pam.d/sudo_local') %}
 TouchID for sudo because the internet:
-  file.line:
-    - name: /private/etc/pam.d/sudo
-    - mode: insert
-    - location: start
-    - content: auth       sufficient     pam_tid.so
+  file.managed:
+    - name: /private/etc/pam.d/sudo_local
+    - content:
+      - # sudo_local: local config file which survives system update and is included for sudo
+      - # uncomment following line to enable Touch ID for sudo
+      - auth sufficient pam_tid.so
 {% endif %}
 
-{% if salt['file.file_exists' ]('/Applications/TextMate.app/Contents/MacOS/mate') %}
-Symlink TextMate 'mate' cli tool into path:
-  file.symlink:
-    - name: {{ pillar['home'] }}/bin/mate
-    - user: {{ pillar['user'] }}
-    - target: /Applications/TextMate.app/Contents/MacOS/mate
-{% endif %}
+# {% if salt['file.file_exists' ]('/Applications/TextMate.app/Contents/MacOS/mate') %}
+# Symlink TextMate 'mate' cli tool into path:
+#   file.symlink:
+#     - name: {{ pillar['home'] }}/bin/mate
+#     - user: {{ pillar['user'] }}
+#     - target: /Applications/TextMate.app/Contents/MacOS/mate
+# {% endif %}
 
-{% if salt['file.file_exists' ]('/Applications/ViDL.app/Contents/Resources/youtube-dl') %}
-Symlink youtube-dl into path:
-  file.symlink:
-    - name: {{ pillar['home'] }}/bin/youtube-dl
-    - user: {{ pillar['user'] }}
-    - target: /Applications/ViDL.app/Contents/Resources/youtube-dl
-{% endif %}
+# {% if salt['file.file_exists' ]('/Applications/ViDL.app/Contents/Resources/youtube-dl') %}
+# Symlink youtube-dl into path:
+#   file.symlink:
+#     - name: {{ pillar['home'] }}/bin/youtube-dl
+#     - user: {{ pillar['user'] }}
+#     - target: /Applications/ViDL.app/Contents/Resources/youtube-dl
+# {% endif %}
